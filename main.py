@@ -1,4 +1,5 @@
-from flask import Flask, request
+from flask import Flask, request, url_for, redirect
+from UserManagement import UserManagement
 
 app = Flask(__name__)
 
@@ -17,22 +18,19 @@ def register():
 
 @app.route("/Register", methods=['POST'])
 def get_register_data():
-    firstname = request.form['text']
-    lastname = request.form['text2']
-    processed_text = f"Olá {firstname} {lastname}, bem vindo!"
-    return processed_text
+    username = request.form['username']
+    password = request.form['password']
 
-
-# @app.route("/Register/Save")
-# def register_save():
-
+    um = UserManagement(username, password)
+    um.create_user()
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
     app.run(debug=True)
 
+
 # TODO: Criar index
-# TODO: Criar pagina de registo de utilizadores
 # TODO: Criação de utilizadores
 # TODO: Autenticação de utilizadores
 # TODO: Criar caixa de mensagens por utilizador
