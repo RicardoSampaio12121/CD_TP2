@@ -1,5 +1,6 @@
 from flask import Flask, request, url_for, redirect
 from UserManagement import UserManagement
+import users
 
 app = Flask(__name__)
 
@@ -26,12 +27,33 @@ def get_register_data():
     return redirect(url_for('index'))
 
 
+@app.route("/Login")
+def login():
+    with open("WebPages/authentication.html") as file:
+        return file.read()
+
+
+@app.route("/Login", methods=['POST'])
+def login_confirmation():
+    username = request.form['username']
+    password = request.form['password']
+
+    um = UserManagement(username, password)
+    authenticated = um.authenticate_user()
+
+    if authenticated:
+        print("deu certo")
+    else:
+        print("deu merda")
+
+    return redirect(url_for('index'))
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
 
-# TODO: Criar index
-# TODO: Criação de utilizadores
 # TODO: Autenticação de utilizadores
 # TODO: Criar caixa de mensagens por utilizador
 # TODO: Enviar mensagem persistente a utilizador
