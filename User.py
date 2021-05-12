@@ -1,10 +1,18 @@
 import mysql.connector
 
 
-class UserManagement:
+class User:
     def __init__(self, username, password):
         self.username = username
         self.password = password
+
+    @property
+    def get_username(self):
+        return self.username
+
+    @property
+    def get_password(self):
+        return self.password
 
     def create_user(self):
         mydb = mysql.connector.connect(host='localhost',
@@ -30,10 +38,7 @@ class UserManagement:
         mycursor.execute("SELECT *FROM user WHERE username ='%s' AND password ='%s'" % (self.username, self.password))
 
         account = mycursor.fetchone()
-        print(account)
 
         if account:
-            print("está aqui dentro")
             return True
-        print("nao entrou")
         return False
