@@ -1,9 +1,5 @@
-from flask import Flask, request, url_for, redirect, render_template
-from User import User
-import users
-import auth
+from flask import Flask, session, make_response, render_template, redirect, url_for, request
 from auth import auth
-
 
 app = Flask(__name__)
 
@@ -12,11 +8,15 @@ app.register_blueprint(auth)
 
 @app.route('/')
 def index():
-    with open("WebPages/index.html") as file:
-        return file.read()
+    user_id = request.cookies.get('user_id')
+    if user_id:
+        return render_template("index.html")
+    else:
+        return redirect(url_for("auth.login"))
 
 
 if __name__ == '__main__':
+    app.secret_key = "2862"
     app.run(debug=True)
 
 

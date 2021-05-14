@@ -1,20 +1,19 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, request, redirect, url_for, session, make_response, render_template
 from User import User
-from flask_login import login_user
-from models import UserModel
-
 
 auth = Blueprint('auth', 'auth')
 
 
 @auth.route('/Signup')
 def signup():
-    print("entra aqui caralho!")
-    with open("WebPages/Register.html") as file:
-        return file.read()
+    user_id = request.cookies.get('user_id')
+    if not user_id:
+        return render_template("RegisterForm.html")
+    else:
+        return redirect(url_for('index'))
 
 
-@auth.route('/signup', methods=['POST'])
+@auth.route('/Signup', methods=['POST'])
 def signup_post():
     username = request.form.get('username')
     password = request.form.get('password')
@@ -28,11 +27,17 @@ def signup_post():
 
 @auth.route('/Login')
 def login():
-    return render_template('WebPages/authentication.html')
+    user_id = request.cookies.get('user_id')
+    if not user_id:
+        return render_template("LoginForm.html")
+    else:
+        return redirect(url_for('index'))
 
 
 @auth.route('/Login', methods=['POST'])
 def login_post():
+    print("entra aqui")
+    # TODO: check if user is already logged in
     username = request.form.get('username')
     password = request.form.get('password')
 
@@ -41,8 +46,10 @@ def login_post():
 
     if not authenticated:
         return redirect(url_for('index'))
+    session[username] = True
 
-    user_model = UserModel(username, password)
-    login_user(user_model)
+    response = redirect(url_for('index'))
+    response.set_cookie('user_id', username)
+    return response
 
 
