@@ -1,0 +1,120 @@
+<html>
+<head>
+    <style>
+        .sendButton{
+            background-color: white;
+            color: black;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 0px 0px;
+            margin: 0px 0;
+            border: none;
+            cursor: pointer;
+            width: 3%;
+            height: 100%
+        }
+
+        input[type=text] {
+            width: 96%;
+            height: 100%;
+            padding: 0px 0px;
+            margin: 0px 0;
+            display: inline-block;
+            border: 0px solid #ccc;
+            box-sizing: border-box;
+            background-color: #d3d3d3 ;
+        }
+        #currentPerson {
+            height: 10%;
+            background-color: yellow;
+        }
+
+        .battom {
+            background-color: white;
+            font-size: 15px;
+            font-weight: bold;
+            color: black;
+            padding: 14px 20px;
+            margin: 1px 0;
+            border: none;
+            border-bottom: 1px solid black;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .battom:hover {
+            color: gray;
+        }
+
+        #people {
+            width: 20%;
+            float: left;
+            height: 100%;
+            overflow: auto;
+            background-color: white;
+        }
+
+        #person {
+            width: 20%;
+            float: left;
+            height: 20px;
+            background-color: white;
+        }
+
+        #messages {
+            width: 80%;
+            float: left;
+            height: 83%;
+            overflow: auto;
+            background-color: white;
+        }
+
+        #inputText
+        {
+            width: 80%;
+            float: left;
+            height: 7%;
+            overflow: auto;
+            background-color: white;
+        }
+
+        #clear {
+            clear: both;
+        }
+    </style>
+</head>
+
+<body>
+    <form method="POST">
+        <div id="people">
+            <script>
+                var div = document.getElementById("people");
+                for(var b = 0; b < {{teste}}; b++)
+                {
+                    var newButton = document.createElement("BUTTON");
+                    newButton.setAttribute('class', 'battom')
+                    var node = document.createTextNode("teste testado!");
+                    newButton.appendChild(node);
+                    div.appendChild(newButton);
+                }
+            </script>
+        </div>
+    </form>
+
+
+    <form method="POST">
+        <div id="currentPerson"></div>
+        <div id="messages">
+            <script>
+
+            </script>
+        </div>
+        <div id="inputText">
+            <input type="text" placeholder="Enter message" name="message" required>
+            <input type="submit" value="Send" class="sendButton">
+        </div>
+    </form>
+        <div id="clear"></div>
+</body>
+
+</html>

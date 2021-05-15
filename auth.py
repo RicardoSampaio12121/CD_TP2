@@ -36,7 +36,6 @@ def login():
 
 @auth.route('/Login', methods=['POST'])
 def login_post():
-    print("entra aqui")
     # TODO: check if user is already logged in
     username = request.form.get('username')
     password = request.form.get('password')

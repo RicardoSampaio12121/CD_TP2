@@ -12,13 +12,13 @@ def index():
     if user_id:
         return render_template("index.html")
     else:
-        return redirect(url_for("auth.login"))
+        return render_template("messengerForm.html", teste=15)
+        # return redirect(url_for("auth.login"))
 
 
 if __name__ == '__main__':
     app.secret_key = "2862"
     app.run(debug=True)
-
 
 # TODO: Criar caixa de mensagens por utilizador
 # TODO: Enviar mensagem persistente a utilizador
