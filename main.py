@@ -12,7 +12,10 @@ def index():
     if user_id:
         return render_template("index.html")
     else:
-        return render_template("messengerForm.html", teste=15)
+
+        mensagens_teste = [("Sent", "Ola"), ("Received", "Boas"), ("Received", "Está tudo?"), ("Sent", "Tá")]
+        print(mensagens_teste)
+        return render_template("messengerForm.html", teste=15, mensagens=mensagens_teste)
         # return redirect(url_for("auth.login"))
 
 

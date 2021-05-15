@@ -1,6 +1,28 @@
 <html>
 <head>
     <style>
+
+        #messageBoxSent, #messageBoxReceived{
+            clear:left;
+            border:solid 1px;
+            margin: 2em;
+            padding:.5em;
+            overflow: auto;
+            overflow-wrap: break-word;
+            border-radius: 25px;
+        }
+
+        #messageBoxSent{
+            text-align: right;
+            background-color: #0099ff;
+        }
+
+        #messageBoxReceived{
+            text-align: left;
+            background-color: #e4e6eb;
+
+        }
+
         .sendButton{
             background-color: white;
             color: black;
@@ -91,7 +113,7 @@
                 var div = document.getElementById("people");
                 for(var b = 0; b < {{teste}}; b++)
                 {
-                    var newButton = document.createElement("BUTTON");
+                    var newButton = document.createElement("button");
                     newButton.setAttribute('class', 'battom')
                     var node = document.createTextNode("teste testado!");
                     newButton.appendChild(node);
@@ -105,9 +127,20 @@
     <form method="POST">
         <div id="currentPerson"></div>
         <div id="messages">
-            <script>
 
-            </script>
+            {% for mode, content in mensagens %}
+                {% if mode == "Sent" %}
+                    <div id="messageBoxSent">
+                        <div>{{content}}</div>
+                    </div>
+                {% else %}
+                    <div id="messageBoxReceived">
+                        <div>{{content}}</div>
+                    </div>
+                {% endif %}
+
+            {% endfor %}
+
         </div>
         <div id="inputText">
             <input type="text" placeholder="Enter message" name="message" required>
