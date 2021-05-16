@@ -1,5 +1,6 @@
 from flask import Blueprint, request, redirect, url_for, session, make_response, render_template
 from User import User
+import os
 
 auth = Blueprint('auth', 'auth')
 
@@ -19,7 +20,7 @@ def signup_post():
     password = request.form.get('password')
 
     user = User(username, password)
-
+    os.mkdir(f'Messenger_records/{username}')
     # TODO: se já existir deve dar erro...corrigir
     user.create_user()
     return redirect(url_for('index'))

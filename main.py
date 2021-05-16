@@ -1,9 +1,11 @@
 from flask import Flask, session, make_response, render_template, redirect, url_for, request
 from auth import auth
+from messenger import messenger
 
 app = Flask(__name__)
 
 app.register_blueprint(auth)
+app.register_blueprint(messenger)
 
 
 @app.route('/')
@@ -12,11 +14,7 @@ def index():
     if user_id:
         return render_template("index.html")
     else:
-
-        mensagens_teste = [("Sent", "Ola"), ("Received", "Boas"), ("Received", "Está tudo?"), ("Sent", "Tá")]
-        print(mensagens_teste)
-        return render_template("messengerForm.html", teste=15, mensagens=mensagens_teste)
-        # return redirect(url_for("auth.login"))
+        return redirect(url_for("auth.login"))
 
 
 if __name__ == '__main__':

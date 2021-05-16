@@ -1,0 +1,5 @@
+Sent:Ola, tudo bem?
+Received:Sim, e contigo?
+Sent:Funciona
+Received:Falta por a dar update ao form quando recebe uma mensagem nova
+Sent:sem ser preciso carregar no botão

@@ -36,3 +36,8 @@ class User:
         if account:
             return True
         return False
+
+    def messenger_load_people(self, username):
+        my_cursor = self.db.cursor()
+
+        mycursor.execute("SELECT")
