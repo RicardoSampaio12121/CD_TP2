@@ -12,6 +12,8 @@ app.register_blueprint(messenger)
 def index():
     user_id = request.cookies.get('user_id')
     if user_id:
+        print(request.cookies.get('session'))
+        print(session)
         return render_template("index.html")
     else:
         return redirect(url_for("auth.login"))
@@ -21,8 +23,6 @@ if __name__ == '__main__':
     app.secret_key = "2862"
     app.run(debug=True)
 
-# TODO: Criar caixa de mensagens por utilizador
-# TODO: Enviar mensagem persistente a utilizador
 # TODO: Criação de grupos
 # TODO: Enviar mensagem persistente a grupo
 # TODO: Notificar ao aparecimento de uma nova mensagem

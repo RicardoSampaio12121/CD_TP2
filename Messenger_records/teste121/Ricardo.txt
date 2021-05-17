@@ -1,5 +1,14 @@
-Received:Ola, tudo bem?
-Sent:Sim, e contigo?
-Received:Funciona
-Sent:Falta por a dar update ao form quando recebe uma mensagem nova
-Received:sem ser preciso carregar no botão
+LastRead:17/05/2021 22:39:18
+Received 17/05/2021 16:23:32-Ola
+Received 17/05/2021 16:23:39-teste
+Received 17/05/2021 16:27:22-ora muito boa noite senhores e senhoras
+Sent 17/05/2021 16:29:44-nao digas que nao te avisei
+Received 17/05/2021 16:29:57-se a ti proprio te enganas nao digas que te enganei
+Received 17/05/2021 16:40:33-testado
+Received 17/05/2021 16:42:58-Como estamos?
+Received 17/05/2021 22:20:26-Ora muito boa noite meu caro
+Received 17/05/2021 22:35:37-Tive uma ideia
+Sent 17/05/2021 22:36:55-Ai sim, que ideia tiveste?
+Received 17/05/2021 22:38:50-Ja passou, esquece xD
+Sent 17/05/2021 22:39:05-Ai sim, que ideia tiveste?
+Received 17/05/2021 23:34:00-ola

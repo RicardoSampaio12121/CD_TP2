@@ -124,14 +124,21 @@
             <input class="searchPeople" name="searchPeople">
 
             {% for person in people %}
-                <input class="battom" type="submit" name="personButton" value={{person}}>
+                {% if person in unreadMessages %}
+                    <input class="battom" style="background-color:blue" type="submit" name="personButton" value={{person}}>
+                {% else %}
+                    <input class="battom" type="submit" name="personButton" value={{person}}>
+
+                {% endif %}
             {% endfor %}
             <input type="hidden" name="selectedConvo" value="">
 
         </div>
     </form>
 
-        <div id="currentPerson"></div>
+        <div id="currentPerson">
+            <p>{{nMessages}}</p>
+        </div>
         <div id="messages">
 
             {% for mode, content in mensagens %}
