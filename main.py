@@ -1,11 +1,13 @@
 from flask import Flask, session, make_response, render_template, redirect, url_for, request
 from auth import auth
+from admin import admin
 from messenger import messenger
 
 app = Flask(__name__)
 
 app.register_blueprint(auth)
 app.register_blueprint(messenger)
+app.register_blueprint(admin)
 
 
 @app.route('/')
