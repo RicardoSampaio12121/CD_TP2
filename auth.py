@@ -24,17 +24,22 @@ def create_user(username, password):
 
 
 def change_user_password(username, password):
-    file = open("User/users.txt", 'r')
+    file = open("Users/users.txt", 'r')
     lines = file.readlines()
+
+    output = []
     for line in lines:
         _ = line.split(' ', 1)
         _[1] = _[1][:-1]
-        if _[0] == username and _[1] == password:
-            line = f'{username} {password} \n'
+        if _[0] == username:
+            output.append(f'{username} {password} \n')
+        else:
+            output.append(line)
 
-    file = open('User/users.txt', 'w')
-    file.writelines(lines)
+    file = open('Users/users.txt', 'w')
+    file.writelines(output)
     file.close()
+
 
 def authenticate_user(username, password):
     file = open("Users/users.txt", "r")
