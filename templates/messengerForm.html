@@ -116,6 +116,36 @@
             clear: both;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+		$('#sendMessageForm').on('submit', function(event) {
+
+			$.ajax({
+				data : {
+					messageSend : $('#messageSend').val(),
+                    to_send : $('#to_send').val(),
+
+				},
+				type : 'POST',
+				url : '/Messenger/c/<string:client_id>'
+			})
+			.done(function(data) {
+
+                var mydiv = document.getElementById("messages");
+				var mBox = document.createElement("div");
+				mBox.setAttribute("id", "messageBoxSent");
+				mBox.innerHTML = data.message;
+
+				mydiv.appendChild(mBox);
+
+			});
+			event.preventDefault();
+		});
+	});
+    </script>
 </head>
 
 <body>
@@ -157,9 +187,9 @@
         </div>
 
         <div id="inputText">
-            <form method="POST">
-                <input type="hidden" name="to_send" value="{{currentPerson}}">
-                <input type="text" placeholder="Enter message" name="message" required>
+            <form id="sendMessageForm">
+                <input type="hidden" name="to_send" id="to_send" value="{{currentPerson}}">
+                <input type="text" placeholder="Enter message" name="message" id="messageSend" required>
                 <input type="submit" id="sendBtn" value="Send" class="sendButton">
             </form>
 

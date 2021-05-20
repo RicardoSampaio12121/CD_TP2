@@ -1,5 +1,5 @@
 from flask import Blueprint, request, redirect, url_for, render_template, jsonify
-from auth import check_if_user_exists, create_user, change_user_password
+from auth import check_if_user_exists, create_user, change_user_password, delete_user
 
 admin = Blueprint('admin', 'admin')
 
@@ -37,8 +37,16 @@ def admin_change_password():
     return jsonify({'error': 'Username does not exists'})
 
 
-# TODO: Remover um utilizador e tudo o que o envolve
+@admin.route('/admin/remove_user/', methods=['DELETE'])
+def admin_remove_user():
+    username = request.form['usernameD']
+
+    if check_if_user_exists(username):
+        delete_user(username)
+        return jsonify({'success': 'User removed successfully!'})
+    return jsonify({'error': 'User does not exists!'})
+
+
+
 # TODO: Definir grupos para utilizadores
 # TODO: Definir canais
-
-

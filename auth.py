@@ -1,5 +1,6 @@
 from flask import Blueprint, request, redirect, url_for, session, make_response, render_template
 import os
+import shutil
 
 auth = Blueprint('auth', 'auth')
 
@@ -37,6 +38,34 @@ def change_user_password(username, password):
             output.append(line)
 
     file = open('Users/users.txt', 'w')
+    file.writelines(output)
+    file.close()
+
+
+def delete_user(username):
+    conversations = []
+
+    for file in os.listdir(f"Messenger_records/{username}"):
+        conversations.append(file[:-4])
+
+    # Delete user message records
+    shutil.rmtree(f'Messenger_records/{username}')
+
+    # Deletes message records from other users to the one being deleted
+    for file in conversations:
+        os.remove(f"Messenger_records/{file}/{username}.txt")
+
+    # Delete from users file
+    file = open("Users/users.txt", "r")
+    lines = file.readlines()
+    output = []
+    for line in lines:
+        _ = line.split(' ', 1)
+        if _[0] == username:
+            pass
+        else:
+            output.append(line)
+    file = open("Users/users.txt", "w")
     file.writelines(output)
     file.close()
 

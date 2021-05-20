@@ -130,10 +130,10 @@ def messenger_post(client_id):
         client_id = request.form.get('personButton')
         return redirect(url_for('messenger.load_messenger_messages', client_id=client_id))
 
-    elif request.form.get('message'):
-        message = request.form.get('message')
+    elif request.form['messageSend']:
+        message = request.form['messageSend']
         sender = request.cookies.get('user_id')
-        to_send = request.form.get('to_send')
+        to_send = request.form['to_send']
         dt_now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
         file = open(f'Messenger_records/{sender}/{to_send}.txt', 'a')
@@ -150,7 +150,10 @@ def messenger_post(client_id):
         file2.close()
 
         messages = get_messages_from_user(sender, to_send)
-        return render_template("messengerForm.html", people=session['people'], mensagens=messages, currentPerson=to_send)
+        return jsonify(message=message)
+        # return render_template("messengerForm.html", people=session['people'], mensagens=messages, currentPerson=to_send)
+
+
     # TODO: ATUALIZAR FORM DA PESSOA QUE RECEBEU A MENSAGEM, SE ESTA ESTIVER ONLINE NA PLATAFORMA
 
 
