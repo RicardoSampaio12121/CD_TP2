@@ -22,6 +22,7 @@ def create_user(username, password):
     file.close()
 
     os.mkdir(f'Messenger_records/{username}')
+    os.mkdir(f'IndividualWorkSpaces/{username}')
 
 
 def change_user_password(username, password):
@@ -50,6 +51,9 @@ def delete_user(username):
 
     # Delete user message records
     shutil.rmtree(f'Messenger_records/{username}')
+
+    # Delete user workspace
+    shutil.rmtree(f'IndividualWorkSpaces/{username}')
 
     # Deletes message records from other users to the one being deleted
     for file in conversations:

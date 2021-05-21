@@ -1,0 +1,88 @@
+slide 1: 
+Bom dia!
+Hoje vamos apresentar um trabalho acerca de Wearable Computing.
+
+Wearable computing, ou computação vestível traduzido à letra, é a prática de inventar e contruir dispositivos computacionais que podem estar ligados diretamente a nós, podendo ser na forma de roupa, acessórios, ou até mesmo implementados no nosso corpo.
+
+
+Slide 2:
+
+Dependendo do que é que define wearable computing, podemos considerar que os relógios de bolso, criados por volta de 1500, foram os primeiros.
+
+Apesar de podermos considerar os relógios de bolso como wearable computers, estes não podem ser programados nem têm qualquer tipo de interação com o utilizador.
+
+Já bem mais recentemente, em 1972, foram apresentados os primeiros relógios de pulso digitais, estes, apesar de muito básicos, já vêm com dois botões de maneira a mudar a hora.
+
+Com o passar dos anos foram aparecendo cada vez mais dispositivos deste tipo, como , calculadoras, relógios com várias funções, telemóveis por ai fora.
+
+Slide 3:
+
+*Ler primeiro paragrafo
+
+Dado que estes dispositivos ficam a correr em background, não há uma necessidade constante de os estar a controlar ou com a nossa atenção virada para eles, o que nos dá uma certa oportunidade de multitasking.
+
+Apesar de ser comum no estudo de Interfaces Homem-máquina se pensar no homem e na máquina como entidades separadas, a teoria de Inteligencia humanística diz o contrario, esta considera o homem e a máquina como uma entidade única, considerando a máquina um segundo cérebro e os seus sensores como sentidos extra do ser humano.
+
+
+Slide 4:
+
+Ler*
+
+Slide 5:
+
+No nosso dia a dia já utilizamos wearable computing tal como os SmartPhones que, neste momento, ninguém vive sem seja por questões de trabalho, entretenimento ou lazer.
+
+Outro dispositivo bastante utilizado agora são os SmartWatches que têm vindo a ganhar cada vez mais terreno contra os relógios tradicionais.
+Estes, para além de dizer as horas como um relógio normal, têm uma interação muito grande com os Smartphones o que nos permite, por exemplo, atender chamadas ou ver mensagens recebidas sem ter que tirar o Smartphone do bolso.
+
+Uma funcionalidade muito interessante dos smartwatches é o serviço de emergência, se o smartwatch detetar uma queda, ele pergunta se quer ligar para o número de emergência e se o utilizador não responder liga.
+Também ao apertar uma sequência de botões ele liga para o número de emergência.
+
+Para além disso, os Smartwatches têm várias aplicações uteis independentes de Smartphones.
+
+
+Slide 6:
+
+Este tipo de dispositivos está muito presente no desporto.
+
+Smart clothes são cada vez mais utilizadas em competições desportivas profissionais.
+
+O facto de estarem cheias de sensores, permitem ao treinador ver o estado fisico dos seus jogadores durante os jogos e, até mesmo, detetar sinais de lesões antes destas acontecerem.
+Nas equipas em que estas roupas foram introduzidas, a taxa de lesões por época diminuiu drasticamente.
+
+
+Slide 7:
+
+As smartBands são outro dispositivo utilizado a nível desportivo, estas conseguem monitorar alguns sinais importantes durante a pratica de exercício físico, como os batimentos cardíacos.
+Conseguem também calcular a distância percorrida durante o ato do exercício físico.
+
+Slide 8:
+
+Ler slide*
+
+Outro exemplo são capacetes que, para além de proteção, têm a capacidade de mostram no visor informações acerca do que os redei-a, como a temperatura de objetos, utilizando tecnologias de realidade aumentada.
+
+
+Slide 9:
+
+Hoje em dia existe milhões de pessoas dependentes de dispositivos médicos ligados ao seu corpo, alguns exemplos desses dispositivos são:
+
+*Ler slide
+
+E como estes dois existem vários, como amplificadores auditivos.
+
+Slide 10:
+
+Na industria de vídeo jogos também se tem vindo a ver a introdução desta tecnologia com os óculos de realidade virtual, estes, permitem dar uma sensação ao jogador de que está de facto dentro do jogo e utilizam sensores de movimento para controlar o movimento no jogo.
+
+Slide 11:
+
+Ler slide*
+
+Slide 12:
+
+Ler slide* 
+
+Slide 13:
+
+Ler slide* 
