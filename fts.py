@@ -31,3 +31,13 @@ def fts_download():
     user_id = request.cookies.get('user_id')
     selected = request.args.get('file')
     return send_file(f"IndividualWorkSpaces/{user_id}/{selected}")
+
+
+@fts.route('/fts/delete', methods=['DELETE'])
+def fts_delete():
+    user_id = request.cookies.get('user_id')
+    file = request.form['to_delete']
+
+    os.remove(f"IndividualWorkSpaces/{user_id}/{file}")
+
+    return jsonify(result="Success")
