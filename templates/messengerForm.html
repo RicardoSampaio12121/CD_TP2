@@ -2,7 +2,7 @@
 <head>
     <style>
 
-        #messageBoxSent, #messageBoxReceived{
+        .messageBoxSent, .messageBoxReceived{
             clear:left;
             border:solid 1px;
             margin: 2em;
@@ -12,12 +12,12 @@
             border-radius: 25px;
         }
 
-        #messageBoxSent{
+        .messageBoxSent{
             text-align: right;
             background-color: #0099ff;
         }
 
-        #messageBoxReceived{
+        .messageBoxReceived{
             text-align: left;
             background-color: #e4e6eb;
 
@@ -136,7 +136,8 @@
 
                 var mydiv = document.getElementById("messages");
 				var mBox = document.createElement("div");
-				mBox.setAttribute("id", "messageBoxSent");
+				mBox.className = "messageBoxSent"
+				mBox.setAttribute("id", data.nmessages);
 				mBox.innerHTML = data.message;
 
 				mydiv.appendChild(mBox);
@@ -146,6 +147,29 @@
 		});
 	});
     </script>
+
+    <script>
+
+        function mmmmm(id)
+        {
+            $.ajax({
+				data : {
+					msgNumber : id,
+                    sent_to : $('#to_send').val(),
+
+				},
+				type : 'DELETE',
+				url : '/messenger/deletemsg'
+			})
+			.done(function(data) {
+
+
+
+			});
+        }
+    </script>
+
+
 </head>
 
 <body>
@@ -166,25 +190,41 @@
         </div>
     </form>
 
-        <div id="currentPerson">
-            <p>{{nMessages}}</p>
-        </div>
-        <div id="messages">
+    <div id="currentPerson">
+        <p>{{nMessages}}</p>
+    </div>
 
-            {% for mode, content in mensagens %}
-                {% if mode == "Sent" %}
-                    <div id="messageBoxSent">
-                        <div>{{content}}</div>
-                    </div>
-                {% else %}
-                    <div id="messageBoxReceived">
-                        <div>{{content}}</div>
-                    </div>
-                {% endif %}
 
-            {% endfor %}
+    <div id="messages">
+        <form id="deleteMsgForm">
+        <script>
+            var i;
+            var msgs = {{ mensagens | tojson }};
+            var divBox = document.getElementById("messages")
 
-        </div>
+            for(i = 0; i < msgs.length; i++){
+
+                var newmsg = document.createElement("div");
+                var newx = document.createElement("button")
+
+                if(msgs[i][0] == "Sent")
+                {
+                        newmsg.className = "messageBoxSent";
+                        newmsg.setAttribute("id", i.toString());
+                        newx.setAttribute("id", i.toString());
+                        newx.setAttribute('onclick','mmmmm(this.getAttribute("id"));');
+                }
+                else
+                {
+                        newmsg.className = "messageBoxReceived";
+                }
+                newmsg.innerHTML = msgs[i][1];
+                newmsg.appendChild(newx);
+                messages.appendChild(newmsg);
+            }
+        </script>
+        </form>
+    </div>
 
         <div id="inputText">
             <form id="sendMessageForm">

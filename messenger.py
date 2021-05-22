@@ -80,6 +80,24 @@ def check_for_new_messages():
     return new_messages
 
 
+def delete_message(index, folder, person):
+    int_index = int(index, base=10)
+
+    file = open(f'Messenger_records/{folder}/{person}.txt', 'r')
+    output = [file.readline()]
+    i = 0
+
+    for line in file:
+
+        if i != int_index:
+            output.append(line)
+        i += 1
+
+    file.close()
+    file = open(f'Messenger_records/{folder}/{person}.txt', 'w')
+    file.writelines(output)
+    file.close()
+
 
 # ROUTES
 
@@ -151,10 +169,18 @@ def messenger_post(client_id):
 
         messages = get_messages_from_user(sender, to_send)
         return jsonify(message=message)
-        # return render_template("messengerForm.html", people=session['people'], mensagens=messages, currentPerson=to_send)
 
 
-    # TODO: ATUALIZAR FORM DA PESSOA QUE RECEBEU A MENSAGEM, SE ESTA ESTIVER ONLINE NA PLATAFORMA
+@messenger.route("/messenger/deletemsg", methods=['DELETE'])
+def delete_msg():
+    user_id = request.cookies.get('user_id')
+    sent_to = request.form['sent_to']
+    msg_index = request.form['msgNumber']
 
+    delete_message(msg_index, user_id, sent_to)
+    delete_message(msg_index, sent_to, user_id)
 
+    nmessages = len(get_messages_from_user(user_id, sent_to))
+
+    return jsonify(result="Message deleted successfully!", nmessages=nmessages)
 
