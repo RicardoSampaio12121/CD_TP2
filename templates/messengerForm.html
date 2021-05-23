@@ -121,6 +121,36 @@
     <script>
         $(document).ready(function() {
 
+			$('#searchPeopleForm').on('submit', function(event) {
+
+				$.ajax({
+					data : {
+						usernameS : $('#searchPeopleInput').val()
+					},
+					type : 'POST',
+					url : '/messenger/searchPerson'
+				})
+				.done(function(data) {
+
+					if(data.nonexistent){
+					    alert("User does not exist!");
+					}
+					else if(data.alreadyadded){
+					    alert("User is already on your contact list!")
+					}
+					else{
+					    document.write(data);
+					}
+				});
+				event.preventDefault();
+			});
+		});
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+
 		$('#sendMessageForm').on('submit', function(event) {
 
 			$.ajax({
@@ -129,8 +159,8 @@
                     to_send : $('#to_send').val(),
 
 				},
-				type : 'POST',
-				url : '/Messenger/c/<string:client_id>'
+				type : 'PUT',
+				url : '/Messenger/send_message'
 			})
 			.done(function(data) {
 
@@ -173,22 +203,30 @@
 </head>
 
 <body>
-    <form method="POST">
-        <div id="people">
-            <input class="searchPeople" name="searchPeople">
 
-            {% for person in people %}
-                {% if person in unreadMessages %}
-                    <input class="battom" style="background-color:blue" type="submit" name="personButton" value={{person}}>
-                {% else %}
-                    <input class="battom" type="submit" name="personButton" value={{person}}>
-
-                {% endif %}
-            {% endfor %}
-            <input type="hidden" name="selectedConvo" value="">
-
-        </div>
+<div id="people">
+    <form id="searchPeopleForm">
+        <input class="searchPeople" id="searchPeopleInput" name="searchPeople">
     </form>
+
+
+    {% for person in people %}
+        <form action="http://localhost:5000/Messenger/c/{{person}}">
+            {% if person in unreadMessages %}
+                <input class="battom" style="background-color:blue" type="submit" name="personButton" value={{person}}>
+            {% else %}
+                <input class="battom" type="submit" name="personButton" value={{person}}>
+            {% endif %}
+        </form>
+    {% endfor %}
+    <input type="hidden" name="selectedConvo" value="">
+
+
+</div>
+
+
+
+
 
     <div id="currentPerson">
         <p>{{nMessages}}</p>

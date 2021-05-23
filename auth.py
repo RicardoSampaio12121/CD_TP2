@@ -124,7 +124,7 @@ def login_post():
     password = request.form.get('password')
 
     if authenticate_user(username, password):
-        session[username] = True
+        session['user_id'] = username
         response = redirect(url_for('index'))
         response.set_cookie('user_id', username)
         return response

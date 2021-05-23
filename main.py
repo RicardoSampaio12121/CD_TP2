@@ -1,4 +1,4 @@
-from flask import Flask, session, make_response, render_template, redirect, url_for, request
+from flask import Flask, session, render_template, redirect, url_for
 from auth import auth
 from admin import admin
 from messenger import messenger
@@ -14,10 +14,7 @@ app.register_blueprint(fts)
 
 @app.route('/')
 def index():
-    user_id = request.cookies.get('user_id')
-    if user_id:
-        print(request.cookies.get('session'))
-        print(session)
+    if session.get('user_id'):
         return render_template("index.html")
     else:
         return redirect(url_for("auth.login"))
@@ -29,6 +26,3 @@ if __name__ == '__main__':
 
 # TODO: Criação de grupos
 # TODO: Enviar mensagem persistente a grupo
-# TODO: Notificar ao aparecimento de uma nova mensagem
-# TODO: Listar número de mensagens na caixa de mensagens
-# TODO: Remover mensagem da caixa de mensagens

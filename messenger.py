@@ -109,66 +109,62 @@ def load_messenger():
     session['people'] = people
 
     if people:
-        return redirect(url_for('messenger.load_messenger_messages', client_id=people[0]))
-    return redirect(url_for('messenger.load_messenger_messages', client_id="null"))
+        return redirect(url_for('messenger.load_messenger_messages', current_conversation=people[0]))
+    return redirect(url_for('messenger.load_messenger_messages', current_conversation="null"))
 
 
-@messenger.route('/Messenger/c/<string:client_id>', methods=['GET'])
-def load_messenger_messages(client_id):
-    if client_id != "null":
-        user_id = request.cookies.get('user_id')
+@messenger.route('/Messenger/c/<string:current_conversation>', methods=['GET'])
+def load_messenger_messages(current_conversation):
+    if current_conversation != "null":
+        user_id = session['user_id']
 
         unread_messages = check_for_new_messages()
-        print(unread_messages)
         time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        update_last_read_time(client_id, time)
-        messages = get_messages_from_user(user_id, client_id)
-        return render_template('MessengerForm.html', mensagens=messages, nMessages=len(messages), people=session['people'], currentPerson=client_id, unreadMessages=unread_messages)
+        update_last_read_time(current_conversation, time)
+        messages = get_messages_from_user(user_id, current_conversation)
+        return render_template('MessengerForm.html', mensagens=messages, nMessages=len(messages), people=session['people'], currentPerson=current_conversation, unreadMessages=unread_messages)
     else:
         return render_template('MessengerForm.html')
 
 
-@messenger.route('/Messenger/c/<string:client_id>', methods=['POST'])
-def messenger_post(client_id):
-    if request.form.get('searchPeople'):
-        username = request.form.get('searchPeople')
-        user_id = request.cookies.get('user_id')
+@messenger.route('/messenger/searchPerson', methods=['POST'])
+def messenger_search_person():
+    username = request.form.get('usernameS')
+    user_id = session.get('user_id')
 
-        if username in session['people']:
-            return redirect(url_for('messenger.load_messenger_messages', client_id=username))
+    if username in session['people']:
+        return jsonify(alreadyadded="User is already in your list!")
+    else:
+        if os.path.exists(f'Messenger_records/{username}'):
+            file = open(f'Messenger_records/{user_id}/{username}.txt', 'w')
+            file.write("LastRead: 00/00/0000 00:00:00\n")
+            session_user_add(username)
+            return redirect(url_for('messenger.load_messenger_messages', current_conversation=username))
         else:
-            if os.path.exists(f'Messenger_records/{username}'):
-                file = open(f'Messenger_records/{user_id}/{username}.txt', 'w')
-                file.write("LastRead: 00/00/0000 00:00:00\n")
-                session_user_add(username)
-                return redirect(url_for('messenger.load_messenger_messages', client_id=username))
-            # TODO: handle error if username does not exist
+            return jsonify(nonexistent="User does not exist!")
 
-    elif request.form.get('personButton'):
-        client_id = request.form.get('personButton')
-        return redirect(url_for('messenger.load_messenger_messages', client_id=client_id))
 
-    elif request.form['messageSend']:
-        message = request.form['messageSend']
-        sender = request.cookies.get('user_id')
-        to_send = request.form['to_send']
-        dt_now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+@messenger.route('/Messenger/send_message', methods=['PUT'])
+def messenger_post():
+    message = request.form['messageSend']
+    sender = session.get('user_id')
+    to_send = request.form['to_send']
+    dt_now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-        file = open(f'Messenger_records/{sender}/{to_send}.txt', 'a')
-        file.write(f'Sent {dt_now}-{message}\n')
-        file.close()
+    file = open(f'Messenger_records/{sender}/{to_send}.txt', 'a')
+    file.write(f'Sent {dt_now}-{message}\n')
+    file.close()
 
-        if not os.path.exists(f'Messenger_records/{to_send}/{sender}.txt'):
-            _ = open(f'Messenger_records/{to_send}/{sender}.txt', "w")
-            _.write("LastRead: 00/00/0000 00:00:00\n")
-            _.close()
+    if not os.path.exists(f'Messenger_records/{to_send}/{sender}.txt'):
+        _ = open(f'Messenger_records/{to_send}/{sender}.txt', "w")
+        _.write("LastRead: 00/00/0000 00:00:00\n")
+        _.close()
 
-        file2 = open(f'Messenger_records/{to_send}/{sender}.txt', 'a')
-        file2.write(f'Received {dt_now}-{message}\n')
-        file2.close()
+    file2 = open(f'Messenger_records/{to_send}/{sender}.txt', 'a')
+    file2.write(f'Received {dt_now}-{message}\n')
+    file2.close()
 
-        messages = get_messages_from_user(sender, to_send)
-        return jsonify(message=message)
+    return jsonify(message=message)
 
 
 @messenger.route("/messenger/deletemsg", methods=['DELETE'])
@@ -183,4 +179,3 @@ def delete_msg():
     nmessages = len(get_messages_from_user(user_id, sent_to))
 
     return jsonify(result="Message deleted successfully!", nmessages=nmessages)
-
