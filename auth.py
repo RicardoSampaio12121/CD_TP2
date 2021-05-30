@@ -86,15 +86,17 @@ def authenticate_user(username, password):
     return False
 
 
+# Apresenta a página para fazer o registo
 @auth.route('/Signup')
 def signup():
-    user_id = request.cookies.get('user_id')
+    user_id = session.get('user_id')
     if not user_id:
         return render_template("RegisterForm.html")
     else:
         return redirect(url_for('index'))
 
 
+# Faz o registo do utilizador
 @auth.route('/Signup', methods=['POST'])
 def signup_post():
     username = request.form.get('username')
@@ -108,15 +110,17 @@ def signup_post():
     return redirect(url_for('index'))
 
 
+# Apresenta a página para fazer o login
 @auth.route('/Login')
 def login():
-    user_id = request.cookies.get('user_id')
+    user_id = session.get('user_id')
     if not user_id:
         return render_template("LoginForm.html")
     else:
         return redirect(url_for('index'))
 
 
+# Faz o login do utilizador
 @auth.route('/Login', methods=['POST'])
 def login_post():
     # TODO: check if user is already logged in

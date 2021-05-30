@@ -1,7 +1,21 @@
 from flask import Blueprint, request, redirect, url_for, render_template, jsonify
 from auth import check_if_user_exists, create_user, change_user_password, delete_user
+import os
 
 admin = Blueprint('admin', 'admin')
+
+
+def create_group(name, members):
+    for member in members:
+        line = ""
+        file = open(f"Messenger_records/{member}/G_{name}.txt", 'w')
+
+        for w in members:
+            if w != member:
+                line += f"{w} "
+        line += '\n'
+        file.write(line)
+        file.close()
 
 
 @admin.route('/admin')
@@ -46,6 +60,16 @@ def admin_remove_user():
         return jsonify({'success': 'User removed successfully!'})
     return jsonify({'error': 'User does not exists!'})
 
+
+@admin.route('/admin/create_group/', methods=['POST'])
+def admin_create_group():
+    group_name = request.form['groupName']
+    _ = request.form['groupMembers']
+    group_members = _.split(' ')
+
+    create_group(group_name, group_members)
+
+    return jsonify(success="ola")
 
 
 # TODO: Definir grupos para utilizadores

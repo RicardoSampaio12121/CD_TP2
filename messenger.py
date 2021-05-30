@@ -38,15 +38,16 @@ def session_user_add(username):
 
 def get_last_visit(username):
     me = request.cookies.get('user_id')
-    file = open(f'Messenger_records/{me}/{username}', 'r')
-    _ = file.readline()
-    x = _.split(':', 1)
-    file.close()
-    return x[1]
+    if username[0] != 'G':
+        file = open(f'Messenger_records/{me}/{username}', 'r')
+        _ = file.readline()
+        x = _.split(':', 1)
+        file.close()
+        return x[1]
 
 
 def update_last_read_time(username, time):
-    me = request.cookies.get('user_id')
+    me = session.get('user_id')
     file = open(f'Messenger_records/{me}/{username}.txt', 'r')
     first_line, remainder = file.readline(), file.read()
     file.close()
@@ -60,23 +61,21 @@ def check_for_new_messages():
     counter = 0
     new_messages = {}
     for filename in os.listdir(f'Messenger_records/{me}/'):
-        last_visit = get_last_visit(filename)
-        file = open(f'Messenger_records/{me}/{filename}', 'r')
-        _ = file.readline()
-        for line in file:
-            counter = 0
-            x = line.split(' ', 1)
-            if x[0] == 'Received':
-                remainder = x[1]
-                y = remainder.split('-', 1)
-                date = y[0]
-
-                print(last_visit)
-
-                if date > last_visit:
-                    counter += 1
-        if counter > 0:
-            new_messages[f'{filename[:-4]}'] = counter
+        if filename[0] != 'G':
+            last_visit = get_last_visit(filename)
+            file = open(f'Messenger_records/{me}/{filename}', 'r')
+            _ = file.readline()
+            for line in file:
+                counter = 0
+                x = line.split(' ', 1)
+                if x[0] == 'Received':
+                    remainder = x[1]
+                    y = remainder.split('-', 1)
+                    date = y[0]
+                    if date > last_visit:
+                        counter += 1
+            if counter > 0:
+                new_messages[f'{filename[:-4]}'] = counter
     return new_messages
 
 
@@ -99,12 +98,36 @@ def delete_message(index, folder, person):
     file.close()
 
 
+def send_group_message(to_send, message):
+    username = session.get('user_id')
+
+    file = open(f"Messenger_records/{username}/{to_send}.txt", "r")
+    _ = file.readline()
+    file.close()
+    members = _.split(' ')
+    members[-1] = members[-1][:-1]
+    dt_now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+
+    file = open(f"Messenger_records/{username}/{to_send}.txt", "a")
+    file.write(f"Sent {dt_now}-{message}\n")
+    file.close()
+
+    for m in members:
+        file = open(f"Messenger_records/{m}/{to_send}.txt", 'a')
+        file.write(f'Received {dt_now}-{username}:{message}\n')
+        file.close()
+
+    print(members)
+
+
+
 # ROUTES
 
-
+# Ao aceder a este link, o programa vai recolher as conversas ativas do utilizador
+# e redireciona para outro link
 @messenger.route('/Messenger')
 def load_messenger():
-    user_id = request.cookies.get('user_id')
+    user_id = session.get('user_id')
     people = get_user_conversations(user_id)
     session['people'] = people
 
@@ -120,7 +143,8 @@ def load_messenger_messages(current_conversation):
 
         unread_messages = check_for_new_messages()
         time = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        update_last_read_time(current_conversation, time)
+        if current_conversation[0] != 'G':
+            update_last_read_time(current_conversation, time)
         messages = get_messages_from_user(user_id, current_conversation)
         return render_template('MessengerForm.html', mensagens=messages, nMessages=len(messages), people=session['people'], currentPerson=current_conversation, unreadMessages=unread_messages)
     else:
@@ -149,21 +173,24 @@ def messenger_post():
     message = request.form['messageSend']
     sender = session.get('user_id')
     to_send = request.form['to_send']
-    dt_now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-    file = open(f'Messenger_records/{sender}/{to_send}.txt', 'a')
-    file.write(f'Sent {dt_now}-{message}\n')
-    file.close()
+    if to_send[0] != 'G':
+        dt_now = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
-    if not os.path.exists(f'Messenger_records/{to_send}/{sender}.txt'):
-        _ = open(f'Messenger_records/{to_send}/{sender}.txt', "w")
-        _.write("LastRead: 00/00/0000 00:00:00\n")
-        _.close()
+        file = open(f'Messenger_records/{sender}/{to_send}.txt', 'a')
+        file.write(f'Sent {dt_now}-{message}\n')
+        file.close()
 
-    file2 = open(f'Messenger_records/{to_send}/{sender}.txt', 'a')
-    file2.write(f'Received {dt_now}-{message}\n')
-    file2.close()
+        if not os.path.exists(f'Messenger_records/{to_send}/{sender}.txt'):
+            _ = open(f'Messenger_records/{to_send}/{sender}.txt', "w")
+            _.write("LastRead: 00/00/0000 00:00:00\n")
+            _.close()
 
+        file2 = open(f'Messenger_records/{to_send}/{sender}.txt', 'a')
+        file2.write(f'Received {dt_now}-{message}\n')
+        file2.close()
+    else:
+        send_group_message(to_send, message)
     return jsonify(message=message)
 
 

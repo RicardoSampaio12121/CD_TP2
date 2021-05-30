@@ -89,6 +89,34 @@
 
 	</script>
 
+	<script>
+		$(document).ready(function() {
+
+			$('#CreateGroupForm').on('submit', function(event) {
+
+				$.ajax({
+					data : {
+						groupName : $('#groupName').val(),
+						groupMembers : $('#groupM').val()
+
+					},
+					type : 'POST',
+					url : '/admin/create_group/'
+				})
+				.done(function(data) {
+
+					if (data.error) {
+						$("#resultG").text(data.error);
+					}
+					else {
+						$('#resultG').text(data.success);
+					}
+				});
+				event.preventDefault();
+			});
+		});
+	</script>
+
 	<style>
 		body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -138,6 +166,7 @@
 	</style>
 </head>
 <body>
+
 <div class="container">
 	<h1>CREATE USER</h1>
 
@@ -166,7 +195,7 @@
 		<label for="passwordCP">Password</label>
 	    <input type="password" id="passwordCP" placeholder="Password">
 
-		<input type="submit" value="Create" name="changePassBtn">
+		<input type="submit" value="Update" name="changePassBtn">
 	</form>
 	<p id=resultCP></p>
 </div>
@@ -186,5 +215,22 @@
 
 </div>
 
+<div class="container">
+	<h1>CREATE GROUP</h1>
+	<form id="CreateGroupForm">
+
+		<label for="groupName">Name</label>
+		<input type="text" id="groupName" placeholder="Group name">
+
+		<label for="groupM">Members</label>
+		<input type="text" id="groupM" placeholder="Group members">
+
+		<input type="submit" value="Create" name="deleteUserBtn">
+
+	</form>
+	<p id="resultG"></p>
+
+
+</div>
 </body>
 </html>

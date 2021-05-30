@@ -9,18 +9,14 @@ instantMessenger = Blueprint('instantMessenger', 'instantMessenger')
 # ROUTES
 
 
-@instantMessenger.route('/InstantMessenger')
-def instantmessenger():
-    return render_template('RoomChooseForm.html')
-
-
-@instantMessenger.route('/Chat')
+@instantMessenger.route('/chat')
 def chat():
-    username = request.cookies.get('user_id')
+    username = request.args.get('username')
     room = request.args.get('room')
 
     if username and room:
-        return render_template('ChatForm.html', username=username, room=room)
+        return render_template('chat.html', username=username, room=room)
     else:
-        return redirect(url_for('index.html'))
+        return redirect(url_for('home'))
+
 

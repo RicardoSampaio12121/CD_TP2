@@ -5,6 +5,8 @@ from admin import admin
 from messenger import messenger
 from instantMessenger import instantMessenger
 from fts import fts
+from instantMessenger import instantMessenger
+from flask_socketio import SocketIO, join_room
 
 app = Flask(__name__)
 socketio = SocketIO(app)
