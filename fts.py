@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, jsonify, send_file
+from flask import Blueprint, render_template, request, jsonify, send_file, session
 import os
 from werkzeug.utils import secure_filename
 
@@ -18,7 +18,7 @@ def fts_load():
 
 @fts.route("/fts/upload", methods=["POST"])
 def fts_post():
-    username = request.cookies.get('user_id')
+    username = session.get('user_id')
     file = request.files['file']
     filename = secure_filename(file.filename)
     file.save(os.path.join(f"IndividualWorkSpaces/{username}", filename))

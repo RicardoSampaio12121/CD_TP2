@@ -113,7 +113,6 @@ def signup_post():
 # Apresenta a página para fazer o login
 @auth.route('/Login')
 def login():
-    print("Entra aqui")
     user_id = session.get('user_id')
     if not user_id:
         return render_template("LoginForm.html")

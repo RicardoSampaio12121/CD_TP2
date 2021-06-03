@@ -120,9 +120,6 @@ def send_group_message(to_send, message):
     print(members)
 
 
-
-# ROUTES
-
 # Ao aceder a este link, o programa vai recolher as conversas ativas do utilizador
 # e redireciona para outro link
 @messenger.route('/Messenger')
