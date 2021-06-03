@@ -1,4 +1,4 @@
-from flask import Blueprint, request, redirect, url_for, session, make_response, render_template
+from flask import Blueprint, request, redirect, url_for, session, make_response, render_template, jsonify
 import os
 import shutil
 
@@ -104,15 +104,16 @@ def signup_post():
 
     if check_if_user_exists(username):
         # Utilizador já existe
-        redirect(url_for('signup'))
+        return jsonify(error="User already exists!")
 
     create_user(username, password)
-    return redirect(url_for('index'))
+    return jsonify(success="User created successfully!")
 
 
 # Apresenta a página para fazer o login
 @auth.route('/Login')
 def login():
+    print("Entra aqui")
     user_id = session.get('user_id')
     if not user_id:
         return render_template("LoginForm.html")
@@ -129,11 +130,8 @@ def login_post():
 
     if authenticate_user(username, password):
         session['user_id'] = username
-        response = redirect(url_for('index'))
-        response.set_cookie('user_id', username)
-        return response
+        return jsonify(success="User successfully authenticated!")
 
-    return redirect(url_for('index'))
-
+    return jsonify(error="Incorrect username or password!")
 
 
