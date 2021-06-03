@@ -30,7 +30,7 @@ def index():
 def handle_join_room_event(data):
     app.logger.info("{} has joined the room {}".format(data['username'], data['room']))
     join_room(data['room'])
-    socketio.emit('join_room_announcement', data, room=data['room'])
+    socketio.emit('join_room_notice', data, room=data['room'])
 
 
 @socketio.on('send_message')

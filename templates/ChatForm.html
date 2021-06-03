@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Chat App</title>
+    <title>Instant Messenger</title>
 </head>
 <body>
-  <h1>Welcome to chat room {{ room }} </h1>
+  <h1>Chat room {{ room }} </h1>
 
   <div id="messages"></div>
 
@@ -49,7 +49,7 @@
     });
 
 
-    socket.on('join_room_announcement', function (data) {
+    socket.on('join_room_notice', function (data) {
         console.log(data);
         const newNode = document.createElement('div');
         newNode.innerHTML = `<b>${data.username}</b> has joined the room`;

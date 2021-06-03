@@ -117,6 +117,32 @@
 		});
 	</script>
 
+	<script>
+		$(document).ready(function() {
+
+			$('#CreateChatForm').on('submit', function(event) {
+
+				$.ajax({
+					data : {
+						chatName: $('#chatName').val()
+					},
+					type : 'POST',
+					url : '/admin/create_chat'
+				})
+				.done(function(data) {
+
+					if (data.error) {
+						$("#resultChat").text(data.error);
+					}
+					else {
+						$('#resultChat').text(data.success);
+					}
+				});
+				event.preventDefault();
+			});
+		});
+	</script>
+
 	<style>
 		body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -230,7 +256,21 @@
 	</form>
 	<p id="resultG"></p>
 
+</div>
+
+<div class="container">
+	<h1>CREATE CHAT ROOM</h1>
+	<form methods="POST" id="CreateChatRoom">
+
+		<label for="chatName">Name</label>
+		<input type="text" id="chatName" placeholder="Chat name">
+
+		<input type="submit" value="Create" name="createChatBtn">
+
+	</form>
+	<p id="resultChat"></p>
 
 </div>
+
 </body>
 </html>

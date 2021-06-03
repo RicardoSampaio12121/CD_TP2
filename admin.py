@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect, url_for, render_template, jsonify, session
 from auth import check_if_user_exists, create_user, change_user_password, delete_user
-import os
+from os import path
 
 admin = Blueprint('admin', 'admin')
 
@@ -71,6 +71,17 @@ def admin_create_group():
 
     return jsonify(success="ola")
 
+
+@admin.route('/admin/create_chat', methods=['POST'])
+def admin_create_chat():
+    chat_name = request.form['chatName']
+    admin.logger.info("teste")
+    if path.exists(f"/Room_Users/Room-{chat_name}.txt"):
+        return jsonify(error="This Chat Room already exists")
+    else:
+        file = open(f"Room_Users/Room-{chat_name}.txt", "w")
+        file.close()
+        return jsonify(success="Chat Room Created!")
 
 # TODO: Definir grupos para utilizadores
 # TODO: Definir canais
