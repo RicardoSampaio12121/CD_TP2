@@ -37,7 +37,7 @@ def session_user_add(username):
 
 
 def get_last_visit(username):
-    me = request.cookies.get('user_id')
+    me = session.get('user_id')
     if username[0] != 'G':
         file = open(f'Messenger_records/{me}/{username}', 'r')
         _ = file.readline()
@@ -57,7 +57,7 @@ def update_last_read_time(username, time):
 
 
 def check_for_new_messages():
-    me = request.cookies.get('user_id')
+    me = session.get('user_id')
     counter = 0
     new_messages = {}
     for filename in os.listdir(f'Messenger_records/{me}/'):
@@ -193,7 +193,7 @@ def messenger_post():
 
 @messenger.route("/messenger/deletemsg", methods=['DELETE'])
 def delete_msg():
-    user_id = request.cookies.get('user_id')
+    user_id = session.get('user_id')
     sent_to = request.form['sent_to']
     msg_index = request.form['msgNumber']
 
