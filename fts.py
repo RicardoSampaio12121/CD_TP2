@@ -6,7 +6,7 @@ fts = Blueprint('fts', 'fts')
 
 
 def get_files_in_workspace():
-    user_id = request.cookies.get('user_id')
+    user_id = session.get('user_id')
     return os.listdir(f'IndividualWorkSpaces/{user_id}/')
 
 
@@ -28,14 +28,14 @@ def fts_post():
 
 @fts.route("/fts/download", methods=["GET"])
 def fts_download():
-    user_id = request.cookies.get('user_id')
+    user_id = session.get('user_id')
     selected = request.args.get('file')
     return send_file(f"IndividualWorkSpaces/{user_id}/{selected}")
 
 
 @fts.route('/fts/delete', methods=['DELETE'])
 def fts_delete():
-    user_id = request.cookies.get('user_id')
+    user_id = session.get('user_id')
     file = request.form['to_delete']
 
     os.remove(f"IndividualWorkSpaces/{user_id}/{file}")

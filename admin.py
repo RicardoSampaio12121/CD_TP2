@@ -1,4 +1,4 @@
-from flask import Blueprint, request, redirect, url_for, render_template, jsonify
+from flask import Blueprint, request, redirect, url_for, render_template, jsonify, session
 from auth import check_if_user_exists, create_user, change_user_password, delete_user
 import os
 
@@ -20,7 +20,7 @@ def create_group(name, members):
 
 @admin.route('/admin')
 def load_admin():
-    user_id = request.cookies.get('user_id')
+    user_id = session.get('user_id')
     if user_id != 'root':
         return redirect(url_for('index'))
     return render_template('AdminPanel.html')
