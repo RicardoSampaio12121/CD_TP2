@@ -75,7 +75,7 @@ def admin_create_group():
 @admin.route('/admin/create_chat', methods=['POST'])
 def admin_create_chat():
     chat_name = request.form['chatName']
-    if os.path.exists(f"/Room_Users/Room-{chat_name}.txt"):
+    if os.path.exists(f"./Room_Users/Room-{chat_name}.txt"):
         return jsonify(error="This Chat Room already exists")
     else:
         file = open(f"Room_Users/Room-{chat_name}.txt", "w")
